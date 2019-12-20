@@ -25,8 +25,24 @@ app.use((req,res,next)=>{
   next();
 });
 
-app.use('/', (req,res,next) => {
+app.post('/', (req,res,next) => {
+    let first = req.body.firstName;
+    let second = req.body.secondName;
+    let message = "Welcome " + first + " " + second;
+
     res.json({
-      number : res.locals.number
+      message : message
+    })
+});
+
+app.use('*',(req,res,next) => {
+    res.status(404).json({
+      message : "the requested API is not found"
+    })
+});
+
+app.use((err,req,res,next) => {
+    res.json ({
+      error : err
     })
 });
